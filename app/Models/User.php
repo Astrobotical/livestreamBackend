@@ -28,6 +28,13 @@ class User extends Authenticatable
     public function suspensions(): HasMany{
         return $this->hasMany(UserSuspensions::class);
     }
+    public function tags()
+    {
+    return $this->belongsToMany(Tag::class, 'user_tag');
+
+
+
+}
     /**
      * The attributes that should be hidden for serialization.
      *

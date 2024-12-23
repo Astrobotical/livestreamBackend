@@ -25,25 +25,26 @@ class livestreamController extends Controller{
 
     }
     public function getNextStream(Request $request){
-        $today = Carbon::now()->format('Y-m-d');
-
-    // Query the streams for today's date (assuming 'start_time' or 'date' column exists)
-    $nextStream = Stream::whereDate('stream_time', $today) // Or 'date' if you use a 'date' column
-        ->orderBy('stream_time', 'asc') // If there are multiple streams, get the next one
-        ->first(); // Get the first stream of the day
-
-    // If there is a stream today, return it. Otherwise, return a 'no stream' message
-    if ($nextStream) {
-        return response()->json([
-            'status' => 'success',
-            'stream' => $nextStream
-        ],200,['Content-Type' => 'application/json']);
-    } else {
-        return response()->json([
-            'status' => 'no stream found',
-            'message' => 'No streams scheduled for today.'
-        ],  200,['Content-Type' => 'application/json']);
-    }
+        // Get the current time
+        $now = Carbon::now();
+    
+        // Query the streams for a future stream (stream_time > now)
+        $nextStream = Stream::where('stream_time', '>', $now) // Only consider future streams
+            ->orderBy('stream_time', 'asc') // Sort by stream_time ascending (earliest stream first)
+            ->first(); // Get the first upcoming stream
+    
+        // If a future stream exists, return it. Otherwise, return a 'no stream' message.
+        if ($nextStream) {
+            return response()->json([
+                'status' => 'success',
+                'stream' => $nextStream
+            ], 200, ['Content-Type' => 'application/json']);
+        } else {
+            return response()->json([
+                'status' => 'no stream found',
+                'message' => 'No future streams scheduled.'
+            ], 200, ['Content-Type' => 'application/json']);
+        }
     }
 
     // Show the form for creating a new livestream

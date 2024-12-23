@@ -6,6 +6,7 @@ use App\Http\Controllers\api\Authentication\authController;
 use App\Http\Controllers\api\admin\adminController;
 use App\Http\Controllers\api\livestreamController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\admin\Tags;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,7 +25,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::post('schedule', [livestreamController::class, 'store']);
     Route::get('getStreams',[livestreamController::class, 'index']);
     Route::post('banUser',[UserController::class,'banUser']);
-});
+        Route::get('tags', [Tags::class, 'getTags']);
+    
+        Route::get('tags/search', [Tags::class, 'searchTags']);
+
+        Route::post('tags', [Tags::class, 'addTag']);
+        
+        Route::post('users/{userId}/tags', [Tags::class, 'addTagsToUser']);
+        Route::put('updateUser/{userId}', [adminController::class, 'updateUser']);
+        // In routes/api.php
+        Route::post('startStream/{id}', [adminController::class, 'startStream']);
+    });
 //General Routes but the user has to be authenticated to use them
 Route::get('getNextStream',[livestreamController::class, 'getNextStream']);
 Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function () {

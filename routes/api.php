@@ -44,5 +44,3 @@ Route::post('checkpassword',[UserController::class,'checkUserPassword']);
 Route::put('update',[UserController::class,'updateUser']);
 }); 
 
-
-

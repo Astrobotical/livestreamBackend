@@ -19,7 +19,7 @@ class StreamStarted implements ShouldBroadcast
     public $stream;
 
     // Constructor
-    public function __construct(array $stream)
+    public function __construct(Stream $stream)
     {
         $this->stream = $stream;
     }

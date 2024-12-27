@@ -19,7 +19,7 @@ class StreamStarted implements ShouldBroadcast
     public $stream;
 
     // Constructor
-    public function __construct(Stream $stream)
+    public function __construct($stream)
     {
         $this->stream = $stream;
     }
@@ -35,7 +35,7 @@ class StreamStarted implements ShouldBroadcast
     {
         return [
             'message' => 'Stream has started!',
-            'stream' => $this->stream,
+            //'stream' => $this->stream,
         ];
     }
 }

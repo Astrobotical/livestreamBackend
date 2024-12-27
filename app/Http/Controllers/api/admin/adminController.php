@@ -121,7 +121,7 @@ public function startStream($id)
 	broadcast(new StreamStarted($stream));
     return response()->json([
         'status' => 'success',
-        'stream' => $stream
+        //'stream' => $stream
     ], 200);
 }
 

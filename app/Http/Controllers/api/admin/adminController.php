@@ -136,7 +136,7 @@ public function endStream($id)
 	}
 
 	// Check if the stream is currently live
-	if ($stream->status !== 'live') {
+	if ($stream->is_live == 1) {
 		return response()->json(['message' => 'Stream is not live'], 400);
 	}
 

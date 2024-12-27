@@ -12,6 +12,7 @@ class Stream extends Model
         'title',
         'description',
         'is_live',
+        'stream_status',
         'stream_date',
         'stream_time',
         'stream_url'

@@ -10,6 +10,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Tag;
 use Carbon\Carbon;
 use App\Events\StreamStarted;
+use App\Events\StreamEnded;
 
 class adminController extends Controller
 {
@@ -125,6 +126,30 @@ public function startStream($id)
     ], 200);
 }
 
+public function endStream($id)
+{
+	// Find the stream by ID
+	$stream = Stream::find($id);
+
+	if (!$stream) {
+		return response()->json(['message' => 'Stream not found'], 404);
+	}
+
+	// Check if the stream is currently live
+	if ($stream->status !== 'live') {
+		return response()->json(['message' => 'Stream is not live'], 400);
+	}
+
+	// Update the stream status to "ended"
+	$stream->status = 'ended';
+	$stream->is_live =  0;
+	$stream->save();
+
+	// Broadcast the stream ended event
+	broadcast(new StreamEnded($stream));
+
+	return response()->json(['message' => 'Stream ended successfully', 'stream' => $stream], 200);
+}
 	public function scheduleStream(Request $request)
 	{
 		$request->validate([

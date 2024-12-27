@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
         Route::put('updateUser/{userId}', [adminController::class, 'updateUser']);
         // In routes/api.php
         Route::post('startStream/{id}', [adminController::class, 'startStream']);
+        Route::post('endStream/{id}', [adminController::class, 'endStream']);
     });
 //General Routes but the user has to be authenticated to use them
 Route::get('getNextStream',[livestreamController::class, 'getNextStream']);

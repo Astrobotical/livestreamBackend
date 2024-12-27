@@ -97,7 +97,7 @@ class adminController extends Controller
 public function startStream($id)
 {
     // Find the stream by ID
-    $stream = Stream::find($id);
+	$stream = Stream::findOrFail($id);
 
     if (!$stream) {
         return response()->json([

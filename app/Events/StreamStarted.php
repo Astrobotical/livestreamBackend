@@ -10,6 +10,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Stream;
+use Illuminate\Database\Eloquent\Collection;
+
 class StreamStarted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -17,7 +19,7 @@ class StreamStarted implements ShouldBroadcast
     public $stream;
 
     // Constructor
-    public function __construct(Stream $stream)
+    public function __construct(Collection $stream)
     {
         $this->stream = $stream;
     }

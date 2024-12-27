@@ -124,6 +124,7 @@ public function startStream($id)
         'stream' => $stream
     ], 200);
 }
+
 	public function scheduleStream(Request $request)
 	{
 		$request->validate([

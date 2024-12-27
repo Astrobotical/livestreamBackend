@@ -30,6 +30,11 @@ class StreamStarted implements ShouldBroadcast
         return new Channel('streams');
     }
 
+    public function broadcastAs()
+    {
+        return 'StreamStarted';
+    }
+
     // Broadcast Data
     public function broadcastWith()
     {

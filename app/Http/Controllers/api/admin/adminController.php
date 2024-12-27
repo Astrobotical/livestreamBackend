@@ -142,7 +142,7 @@ public function endStream($id)
 
 	// Update the stream status to "ended"
 	$stream->stream_status = 'passed';
-	$stream->is_live =  0;
+	$stream->is_live =  false;
 	$stream->save();
 
 	// Broadcast the stream ended event

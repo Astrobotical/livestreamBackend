@@ -18,6 +18,11 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('signup', [authController::class, 'userRegistration']);
     Route::post('validate', [authController::class, 'doesuserExists']);
     Route::get('verify', [authController::class, 'verifyUser'])->middleware('auth:sanctum');
+    Route::post('logout', [authController::class, 'userLogout'])->middleware('auth:sanctum');
+    Route::group(['prefix' => 'password'], function () {
+        Route::post('forgot', [authController::class, 'forgotPassword']);
+        Route::post('reset', [authController::class, 'resetPassword']);
+    });
 });
 // Admin/Moderator only Group api/admin/
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {

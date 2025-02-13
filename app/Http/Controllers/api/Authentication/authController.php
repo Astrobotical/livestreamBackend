@@ -87,4 +87,40 @@ class authController extends Controller{
         $userID =  $request->user()->id;
         return response()->json( ['user'=> $userRole,'userID'=>$userID],status:200, headers:['Content-Type' => 'application/json']);
     }
+    public function forgotPassword(Request $request){
+        $validator =  Validator::make($request->all(),[
+            'email'=>'required|email'
+        ]);
+        if ($validator->fails())
+            return response()->json([
+                'error' => 'Email is required',
+
+            ], 404, ['Content-Type' => 'application/json']);
+            $user = User::where('Email', $request->email)->first();
+            if($user){
+                //Send the user an email with a link to reset the password
+                return response()->json( status:200, headers:['Content-Type' => 'application/json']);
+            }else{
+                return response()->json( status:204, headers:['Content-Type' => 'application/json']);
+            }
+    }
+    public function resetPassword(Request $request){
+        $validator =  Validator::make($request->all(),[
+            'email'=>'required|email',
+            'password'=>'required'
+        ]);
+        if ($validator->fails())
+            return response()->json([
+                'error' => 'Email is required',
+
+            ], 404, ['Content-Type' => 'application/json']);
+            $user = User::where('Email', $request->email)->first();
+            if($user){
+                $user->password = Hash::make(trim($request->password));
+                $user->save();
+                return response()->json( status:200, headers:['Content-Type' => 'application/json']);
+            }else{
+                return response()->json( status:204, headers:['Content-Type' => 'application/json']);
+            }
+    }
 }

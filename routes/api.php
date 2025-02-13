@@ -20,8 +20,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('verify', [authController::class, 'verifyUser'])->middleware('auth:sanctum');
     Route::post('logout', [authController::class, 'userLogout'])->middleware('auth:sanctum');
     Route::group(['prefix' => 'password'], function () {
-        Route::post('forgot', [authController::class, 'forgotPassword']);
-        Route::post('reset', [authController::class, 'resetPassword']);
+        Route::post('changerequest', [authController::class, 'forgotPassword']);
+        Route::post('resetrequest', [authController::class, 'resetPassword']);
     });
 });
 // Admin/Moderator only Group api/admin/
